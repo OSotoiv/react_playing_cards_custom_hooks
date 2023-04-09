@@ -5,7 +5,7 @@ import uuid from "uuid";
 const useAxios = (baseurl) => {
     const [cardList, setCardsList] = useState([]);
     const url = useRef(baseurl)
-    async function addToCardList(path = null) {
+    async function addToCardList(path) {
         if (path) {
             console.log('path!', path)
             const response = await axios.get(url.current + path);
@@ -16,7 +16,8 @@ const useAxios = (baseurl) => {
             setCardsList(cards => [...cards, { ...response.data, id: uuid() }]);
         }
     }
-    return [cardList, addToCardList];
+    function clearCardList() { setCardsList([]) }
+    return [cardList, addToCardList, clearCardList];
 }
 
 export default useAxios;
